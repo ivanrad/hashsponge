@@ -15,6 +15,7 @@ import (
 )
 
 var hashAlg = flag.String("a", "sha256", "hash algorithms: md5, sha1, sha256, sha384, sha512, blake2b")
+var quiet = flag.Bool("q", false, "quiet; don't output error message checksum/hash mismatch")
 
 func usage() {
 	fmt.Fprintf(flag.CommandLine.Output(), "Usage:  %s [-a HASH_ALGORITHM] HASH_VALUE\n\n", os.Args[0])
@@ -78,7 +79,9 @@ func main() {
 
 	inHash := fmt.Sprintf("%x", hashFn(buf))
 	if hashArg != inHash {
-		fmt.Fprintf(os.Stderr, "error: hash mismatch (input hash: %s)\n", inHash)
+		if !*quiet {
+			fmt.Fprintf(os.Stderr, "error: hash mismatch (input hash: %s)\n", inHash)
+		}
 		os.Exit(1)
 	}
 
