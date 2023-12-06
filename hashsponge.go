@@ -78,7 +78,7 @@ func main() {
 
 	inHash := fmt.Sprintf("%x", hashFn(buf))
 	if hashArg != inHash {
-		fmt.Fprintf(os.Stderr, "error: hash mismatch (input hash: %s)", inHash)
+		fmt.Fprintf(os.Stderr, "error: hash mismatch (input hash: %s)\n", inHash)
 		os.Exit(1)
 	}
 
