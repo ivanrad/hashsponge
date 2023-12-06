@@ -14,8 +14,10 @@ import (
 	"golang.org/x/crypto/blake2b"
 )
 
-var hashAlg = flag.String("a", "sha256", "hash algorithms: md5, sha1, sha256, sha384, sha512, blake2b")
-var quiet = flag.Bool("q", false, "quiet; don't output error message on hash mismatch")
+var (
+	hashAlg = flag.String("a", "sha256", "hash algorithms: md5, sha1, sha256, sha384, sha512, blake2b")
+	quiet   = flag.Bool("q", false, "quiet; don't output error message on hash mismatch")
+)
 
 func usage() {
 	fmt.Fprintf(flag.CommandLine.Output(), "Usage:  %s [-a HASH_ALGORITHM] HASH_VALUE\n\n", os.Args[0])
