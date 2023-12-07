@@ -5,11 +5,13 @@ import (
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"os"
 	"strings"
+	"syscall"
 
 	"golang.org/x/crypto/blake2b"
 )
@@ -89,8 +91,8 @@ func main() {
 
 	nwritten := 0
 	for nwritten < len(buf) {
-		n, err := os.Stdout.Write(buf)
-		if err != nil {
+		n, err := os.Stdout.Write(buf[nwritten:])
+		if err != nil && !errors.Is(err, syscall.EINTR) {
 			fmt.Fprintf(os.Stderr, "error: %v\n", err)
 			os.Exit(1)
 		}
